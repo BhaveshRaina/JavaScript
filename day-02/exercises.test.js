@@ -2,7 +2,12 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { describeBrowserLaunch, describeTestRun } from "./control-flow.js";
 import { classifyParity, classifySign } from "./numbers.js";
-import { areAnagrams, isPalindrome, lastWordLength, reverseText } from "./strings.js";
+import {
+  areAnagrams,
+  isPalindrome,
+  lastWordLength,
+  reverseText,
+} from "./strings.js";
 
 test("browser selection gives Chrome a dedicated message", () => {
   assert.equal(describeBrowserLaunch("chrome"), "Starting Google Chrome.");
@@ -13,7 +18,10 @@ test("test selection recognizes each suite and falls back to smoke", () => {
   for (const suite of ["smoke", "sanity", "regression"]) {
     assert.equal(describeTestRun(suite), `Selected test suite: ${suite}.`);
   }
-  assert.equal(describeTestRun("integration"), "Unrecognized suite. Selected test suite: smoke.");
+  assert.equal(
+    describeTestRun("integration"),
+    "Unrecognized suite. Selected test suite: smoke.",
+  );
 });
 
 test("number sign handles decimals, signed zero, and invalid input", () => {

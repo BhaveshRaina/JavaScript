@@ -3,29 +3,32 @@ export function lastWordLength(text) {
   return Array.from(lastWord).length;
 }
 
-export function areAnagrams(first, second) {
-  const firstCharacters = first.toLowerCase().replace(/\s/gu, "");
-  const secondCharacters = second.toLowerCase().replace(/\s/gu, "");
-  const counts = new Map();
+export function areAnagrams(firstText, secondText) {
+  const firstCharacters = firstText.toLowerCase().replace(/\s/gu, "");
+  const secondCharacters = secondText.toLowerCase().replace(/\s/gu, "");
+  const remainingCounts = new Map();
 
   for (const character of firstCharacters) {
-    counts.set(character, (counts.get(character) ?? 0) + 1);
+    remainingCounts.set(character, (remainingCounts.get(character) ?? 0) + 1);
   }
+
+  // Consume each occurrence once so repeated characters must match as well.
   for (const character of secondCharacters) {
-    const count = counts.get(character);
+    const count = remainingCounts.get(character);
     if (count === undefined) {
       return false;
     }
     if (count === 1) {
-      counts.delete(character);
+      remainingCounts.delete(character);
     } else {
-      counts.set(character, count - 1);
+      remainingCounts.set(character, count - 1);
     }
   }
-  return counts.size === 0;
+  return remainingCounts.size === 0;
 }
 
 export function reverseText(text) {
+  // Iterate by Unicode code point to keep characters such as 🚀 intact.
   return Array.from(text).reverse().join("");
 }
 
